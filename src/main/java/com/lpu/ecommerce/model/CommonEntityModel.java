@@ -1,11 +1,17 @@
 package com.lpu.ecommerce.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ *
+ * @project Ecommerce
+ * @author KANWALJEET on 28-11-2023
+**/
+@Data
+@MappedSuperclass
 public class CommonEntityModel {
 
     @Id
@@ -17,7 +23,6 @@ public class CommonEntityModel {
     private LocalDateTime createdTime;
 
     private LocalDateTime updatedTime;
-
 
 
 }
