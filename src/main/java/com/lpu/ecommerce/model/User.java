@@ -1,6 +1,5 @@
 package com.lpu.ecommerce.model;
 
-import com.lpu.ecommerce.model.CommonEntityModel;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;
