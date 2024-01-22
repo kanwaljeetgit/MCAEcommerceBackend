@@ -27,6 +27,11 @@ public class OrderController {
        return new ResponseEntity<>(orderService.save(order), HttpStatus.CREATED);
     }
 
+    @PatchMapping("/update/{orderId}/status/{status}")
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId, @PathVariable Order.OrderStatus status){
+        return new ResponseEntity<>(orderService.orderStatusUpdate(orderId,status), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<Order>> getOrders(){
         return new ResponseEntity<>(orderService.getOrderForUser(),HttpStatus.OK);

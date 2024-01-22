@@ -5,11 +5,16 @@ import com.lpu.ecommerce.model.User;
 import com.lpu.ecommerce.model.request.AuthenticationRequest;
 import com.lpu.ecommerce.model.request.RegisterRequest;
 import com.lpu.ecommerce.model.response.AuthenticationResponse;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * @author KANWALJEET on 01-12-2023
@@ -49,8 +54,10 @@ public class AuthenticationService {
         );
         var user = userService.loadUserByUsername(request.getEmail());
         var token = jwtService.generateToken(user);
+        Date date = jwtService.extractClaims(token, Claims::getExpiration);
         return AuthenticationResponse.builder()
                 .token(token)
+                .expireAt(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
                 .build();
     }
 }

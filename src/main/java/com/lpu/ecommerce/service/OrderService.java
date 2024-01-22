@@ -1,5 +1,6 @@
 package com.lpu.ecommerce.service;
 
+import com.lpu.ecommerce.exception.RecordNotFound;
 import com.lpu.ecommerce.model.Order;
 import com.lpu.ecommerce.repository.OrderRepository;
 import com.lpu.ecommerce.service.impl.AbstractCommonService;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -54,12 +56,19 @@ public class OrderService extends AbstractCommonService<Order> {
 
     @Scheduled(fixedDelay = 60*60*1000)
     @Transactional(propagation = Propagation.REQUIRED)
-    public void orderStatusUpdate(){
+    public void orderStatusBatchUpdate(){
         List<Order> allPendingOrder = ((OrderRepository) repo).findAllByStatus(Order.OrderStatus.PENDING);
         allPendingOrder.stream()
                 .filter(ord-> DateTimeUtils.isDateTimeEqualOrBefore(ord.getCreatedTime().plusHours(2), LocalDateTime.now()))
                 .forEach(order -> order.setStatus(Order.OrderStatus.ACCEPT));
         repo.saveAll(allPendingOrder);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Order orderStatusUpdate(Long orderId, Order.OrderStatus status){
+        Order order = repo.findById(orderId).orElseThrow(()->new RecordNotFound("Order not found with order id : "+orderId));
+        order.setStatus(status);
+        return repo.save(order);
     }
 
 }
