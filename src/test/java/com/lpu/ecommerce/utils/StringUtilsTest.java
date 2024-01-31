@@ -17,7 +17,6 @@ class StringUtilsTest {
     @Test
     void format() {
         String formatted = StringUtils.format("Hi {}, How are you {}.", "Kanwaljeet", "?");
-        System.out.println(formatted);
         assertEquals("Hi Kanwaljeet, How are you ?.",formatted);
     }
 

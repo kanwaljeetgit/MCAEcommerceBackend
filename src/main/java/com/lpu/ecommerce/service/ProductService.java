@@ -25,7 +25,7 @@ public class ProductService extends AbstractCommonService<Product> {
     public Product save(Product product) {
         Optional<Product> productDB = ((ProductRepository) repo).findByTitle(product.getTitle());
         if(productDB.isPresent()){
-            throw new DataAlreadyExists("Data Already exists",productDB.get());
+            throw new DataAlreadyExists("Product Already exists",productDB.get());
         }
         Rating rating = product.getRating();
         if(rating == null){

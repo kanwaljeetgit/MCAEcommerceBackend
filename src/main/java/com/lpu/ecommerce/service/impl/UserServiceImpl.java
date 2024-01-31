@@ -41,7 +41,7 @@ public class UserServiceImpl extends AbstractCommonService<User> implements User
     public User save(User user) {
         Optional<User> dbUser = getUserByUserName(user.getUsername());
         if(dbUser.isPresent()){
-            throw new DataAlreadyExists("Data Already exists",dbUser.get());
+            throw new DataAlreadyExists("User Already exists",dbUser.get());
         }
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         return super.save(user);

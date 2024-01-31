@@ -24,10 +24,4 @@ public class DateTimeUtils {
         return isDateTimeEqual(compare,compareTo) || compare.isBefore(compareTo);
     }
 
-    public static void main(String[] args) {
-        LocalDateTime a = LocalDateTime.now();
-        LocalDateTime b = LocalDateTime.now().plusHours(2);
-        System.out.println(isDateTimeEqualOrAfter(b,a));
-    }
-
 }

@@ -20,7 +20,7 @@ public class CartService extends AbstractCommonService<Cart> {
 
     @Override
     public Cart save(Cart cart) {
-        cart.setUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        cart.setUser(cart.getUser()==null ? SecurityContextHolder.getContext().getAuthentication().getName() : cart.getUser());
         try {
             Cart cartFromDB = findByUser(cart.getUser());
             cartFromDB.setCartData(cart.getCartData());

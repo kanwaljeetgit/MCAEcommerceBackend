@@ -57,6 +57,7 @@ public class SpringSecurityConfig {
             .authenticationProvider(authProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .cors(Customizer.withDefaults());
+        http.exceptionHandling(Customizer.withDefaults());
         return http.build();
     }
 
